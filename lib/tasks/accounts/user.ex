@@ -17,6 +17,7 @@ defmodule Tasks.Accounts.User do
     user
     |> cast(attrs, [:name, :age, :email])
     |> validate_required([:name, :age, :email])
+    |> validate_length(:name, max: 15)
   end
 
   def update_changeset(user, attrs) do
