@@ -25,6 +25,12 @@ defmodule TasksWeb.UserController do
     render(conn, "show.json", user: user)
   end
 
+  def show_by_username(conn, %{"name" => name}) do
+    with {:ok, user} <- Accounts.get_user_by_name(name) do
+      render(conn, "show.json", user: user)
+    end
+  end
+
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
 

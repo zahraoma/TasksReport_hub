@@ -37,6 +37,13 @@ defmodule Tasks.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_by_name(name) do
+    case Repo.one(from(u in User, where: u.name == ^name)) do
+      nil -> {:error, :not_found}
+      data -> {:ok, data}
+    end
+  end
+
   @doc """
   Creates a user.
 

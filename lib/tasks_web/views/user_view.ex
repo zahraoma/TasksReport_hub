@@ -13,7 +13,8 @@ defmodule TasksWeb.UserView do
   def render("user.json", %{user: user}) do
     %{
       id: user.id,
-      name: user.name
+      name: user.name,
+      sum_tasks: user.sum_tasks
     }
   end
 end

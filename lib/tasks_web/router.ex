@@ -23,11 +23,12 @@ defmodule TasksWeb.Router do
   scope "/api", TasksWeb do
     pipe_through :api
 
+    get("/users/show_by_user", UserController, :show_by_username)
     resources("/users", UserController)
-    #get "/users/:id", UserController, :show
-    #post "/users/", UserController, :create
-    #put "/users/:id", UserController, :update
-    #delete "/users/:id", UserController, :delete
+    # get "/users/:id", UserController, :show
+    # post "/users/", UserController, :create
+    # put "/users/:id", UserController, :update
+    # delete "/users/:id", UserController, :delete
 
     resources("/tasks", TaskController)
   end

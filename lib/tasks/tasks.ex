@@ -63,6 +63,8 @@ defmodule Tasks.Tasks do
         |> User.update_changeset(%{"sum_tasks" => user_data.sum_tasks + task.time})
         |> Repo.update()
 
+        {:ok, task}
+
       # # solution 2
       # Repo.one(
       #   from u in User,

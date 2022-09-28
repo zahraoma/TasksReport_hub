@@ -14,7 +14,10 @@ defmodule TasksWeb.TaskView do
     IO.inspect(task)
 
     %{
-      id: task.id
+      id: task.id,
+      title: task.title,
+      content: task.content,
+      time: task.time
     }
   end
 end
