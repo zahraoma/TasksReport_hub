@@ -6,7 +6,6 @@ config :tasks, Tasks.Repo,
   password: "mysecretpassword",
   hostname: "localhost",
   database: "test_dev",
-  port: 5433,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
