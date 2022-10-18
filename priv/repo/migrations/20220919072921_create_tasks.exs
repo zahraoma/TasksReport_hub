@@ -6,7 +6,7 @@ defmodule Tasks.Repo.Migrations.CreateTasks do
       add :title, :string
       add :content, :string
       add :time, :integer
-      add :user_id, references(:users)
+      add :user_id, references(:users, on_delete: :nilify_all)
       timestamps()
     end
   end

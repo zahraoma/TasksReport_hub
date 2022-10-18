@@ -9,6 +9,7 @@ defmodule Tasks.Accounts.User do
     field(:sum_tasks, :integer, default: 0)
     has_many(:tasks, Tasks.Tasks.Task)
 
+
     timestamps()
   end
 

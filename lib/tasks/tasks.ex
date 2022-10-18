@@ -4,6 +4,7 @@ defmodule Tasks.Tasks do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias Tasks.Repo
   alias Tasks.Accounts.User
 
@@ -106,8 +107,19 @@ defmodule Tasks.Tasks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_task(%Task{} = task) do
-    Repo.delete(task)
+  def delete_task(%Task{user_id: user_id, time: time} = task, _attrs \\ %{}) do
+    IO.inspect(user_id)
+
+    Multi.new()
+    |> Multi.update_all(
+      "update sum tasks in user data",
+      from(u in User,
+        where: u.id == ^user_id
+      ),
+      inc: [sum_tasks: 0 - time]
+    )
+    |> Multi.delete("delete task", task)
+    |> Repo.transaction()
   end
 
   @doc """
