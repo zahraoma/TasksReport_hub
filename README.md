@@ -17,3 +17,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+  ![Untitled_Diagram_23_.drawio](/uploads/8f86fa1dd4cbdbf00635974ab372b185/Untitled_Diagram_23_.drawio.png)
