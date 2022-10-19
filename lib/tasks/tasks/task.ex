@@ -17,4 +17,11 @@ defmodule Tasks.Tasks.Task do
     |> cast(attrs, [:title, :content, :time, :user_id])
     |> validate_required([:title, :content, :time, :user_id])
   end
+
+  def update_changeset(task, attrs) do
+    
+    task
+    |> cast(attrs, [:title, :content, :time, :user_id])
+
+  end
 end

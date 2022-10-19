@@ -67,7 +67,7 @@ defmodule Tasks.Tasks do
         {:ok, task}
 
       # # solution 2
-      # Repo.one(
+      # Repo.update_all(
       #   from u in User,
       #     where: u.id == ^user_id,
       #     update: [set: [sum_tasks: u.sum_tasks + ^task.time]]
@@ -89,10 +89,44 @@ defmodule Tasks.Tasks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_task(%Task{} = task, attrs) do
-    task
-    |> Task.changeset(attrs)
-    |> Repo.update()
+
+  # Repo.update(
+  # from u in User,
+  # where: u.id == ^user_id,
+  # update: [set: [sum_tasks: u.sum_tasks + ^task.time - ^t1]]
+  # )
+  # IO.inspect "------------------------"
+
+  def update_task(
+        %Task{id: task_id, user_id: user_id, time: time} = task,
+        %{"time" => new_time} = attrs
+      ) do
+    # time =
+    #   Repo.one(
+    #     from u in Task,
+    #       where: u.id == ^task_id,
+    #       select: u.time
+    #   )
+    Multi.new()
+    |> Multi.update_all(
+      "update sum tasks in user data",
+      from(
+        u in User,
+        where: u.id == ^user_id
+      ),
+      inc: [sum_tasks: new_time - time]
+    )
+    |> Multi.update("update task", Task.update_changeset(%Task{id: task_id}, attrs))
+    |> Repo.transaction()
+    |> IO.inspect()
+    |> case do
+      {:ok, %{"update task" => updated_task}} -> {:ok, updated_task}
+      _ -> {:error, :not_found}
+    end
+
+    # task
+    #  |> Task.changeset(attrs)
+    #  |> Repo.update()
   end
 
   @doc """

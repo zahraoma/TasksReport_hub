@@ -1,6 +1,6 @@
 defmodule TasksWeb.TaskController do
   use TasksWeb, :controller
- alias Tasks.Tasks.Task
+  alias Tasks.Tasks.Task
 
   alias Tasks.Tasks
 
@@ -39,6 +39,5 @@ defmodule TasksWeb.TaskController do
     with {:ok, _} <- Tasks.delete_task(task) do
       send_resp(conn, :no_content, "")
     end
-
   end
 end
