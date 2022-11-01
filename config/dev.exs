@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :tasks, Tasks.Repo,
-  username: "postgres",
-  password: "mysecretpassword",
+  username: "postgrsas",
+  password: "mysacretpessword",
   hostname: "localhost",
   database: "test_dev",
   port: 5433,
