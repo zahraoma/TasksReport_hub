@@ -14,7 +14,7 @@ defmodule TasksWeb.UserView do
     %{
       id: user.id,
       name: user.name,
-      sum_tasks: user.sum_tasks
+      # sum_tasks: user.sum_tasks
     }
   end
 end

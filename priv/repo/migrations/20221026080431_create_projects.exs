@@ -1,12 +1,9 @@
-defmodule Tasks.Repo.Migrations.CreateTasks do
+defmodule Tasks.Repo.Migrations.CreateProjects do
   use Ecto.Migration
 
   def change do
-    create table(:tasks) do
+    create table(:projects) do
       add :title, :string
-      add :content, :string
-      add(:date, :date)
-      add :time, :integer
       add :user_id, references(:users, on_delete: :nilify_all)
       timestamps()
     end

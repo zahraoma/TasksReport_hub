@@ -31,7 +31,10 @@ defmodule TasksWeb.Router do
     # delete "/users/:id", UserController, :delete
 
     resources("/tasks", TaskController)
+    get("/projects/show_sum_project", ProjectController, :show_sum_project)
+    resources("/projects", ProjectController)
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", TasksWeb do

@@ -6,7 +6,7 @@ defmodule Tasks.Repo.Migrations.CreateUsers do
       add :name, :string
       add :age, :integer
       add :email, :string
-      add :sum_tasks, :integer
+      # add :sum_tasks, :integer
 
       timestamps()
     end

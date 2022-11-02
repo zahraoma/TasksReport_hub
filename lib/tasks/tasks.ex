@@ -52,29 +52,37 @@ defmodule Tasks.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
-    user_id = attrs["user_id"]
-    user_data = Repo.get(User, user_id)
+    # user_id = attrs["user_id"]
+    # user_data = Repo.get(User, user_id)
 
     %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert()
-    |> case do
-      {:ok, task} ->
-        %User{id: user_id}
-        |> User.update_changeset(%{"sum_tasks" => user_data.sum_tasks + task.time})
-        |> Repo.update()
 
-        {:ok, task}
+    # |> case do
+    #   {:ok, task} ->
+    #     %User{id: user_id}
+    #     |> User.update_changeset(%{"sum_tasks" => user_data.sum_tasks + task.time})
+    #     |> Repo.update()
 
-      # # solution 2
-      # Repo.update_all(
-      #   from u in User,
-      #     where: u.id == ^user_id,
-      #     update: [set: [sum_tasks: u.sum_tasks + ^task.time]]
-      # )
-      error ->
-        error
-    end
+    #     {:ok, task}
+
+    #   # # solution 2
+    #   # Repo.update_all(
+    #   #   from u in User,
+    #   #     where: u.id == ^user_id,
+    #   #     update: [set: [sum_tasks: u.sum_tasks + ^task.time]]
+    #   # )
+    #   error ->
+    #     error
+
+    # sum_tasks = Repo.one(
+    #               from u in User,
+    #               where: u.id == ^user_id,
+    #               select: sum(u.time)
+    #             )
+
+    # end
   end
 
   @doc """
@@ -101,32 +109,33 @@ defmodule Tasks.Tasks do
         %Task{id: task_id, user_id: user_id, time: time} = task,
         %{"time" => new_time} = attrs
       ) do
+    task
+    |> Task.changeset(attrs)
+    |> Repo.update()
+
     # time =
     #   Repo.one(
     #     from u in Task,
     #       where: u.id == ^task_id,
     #       select: u.time
     #   )
-    Multi.new()
-    |> Multi.update_all(
-      "update sum tasks in user data",
-      from(
-        u in User,
-        where: u.id == ^user_id
-      ),
-      inc: [sum_tasks: new_time - time]
-    )
-    |> Multi.update("update task", Task.update_changeset(%Task{id: task_id}, attrs))
-    |> Repo.transaction()
-    |> IO.inspect()
-    |> case do
-      {:ok, %{"update task" => updated_task}} -> {:ok, updated_task}
-      _ -> {:error, :not_found}
-    end
 
-    # task
-    #  |> Task.changeset(attrs)
-    #  |> Repo.update()
+    # Multi.new()
+    # |> Multi.update_all(
+    #   "update sum tasks in user data",
+    #   from(
+    #     u in User,
+    #     where: u.id == ^user_id
+    #   ),
+    #   inc: [sum_tasks: new_time - time]
+    # )
+    # |> Multi.update("update task", Task.update_changeset(%Task{id: task_id}, attrs))
+    # |> Repo.transaction()
+    # |> IO.inspect()
+    # |> case do
+    #   {:ok, %{"update task" => updated_task}} -> {:ok, updated_task}
+    #   _ -> {:error, :not_found}
+    #  end
   end
 
   @doc """
@@ -142,18 +151,21 @@ defmodule Tasks.Tasks do
 
   """
   def delete_task(%Task{user_id: user_id, time: time} = task, _attrs \\ %{}) do
-    IO.inspect(user_id)
 
-    Multi.new()
-    |> Multi.update_all(
-      "update sum tasks in user data",
-      from(u in User,
-        where: u.id == ^user_id
-      ),
-      inc: [sum_tasks: 0 - time]
-    )
-    |> Multi.delete("delete task", task)
-    |> Repo.transaction()
+
+    Repo.delete(task)
+    # IO.inspect(user_id)
+
+    # Multi.new()
+    # |> Multi.update_all(
+    #   "update sum tasks in user data",
+    #   from(u in User,
+    #     where: u.id == ^user_id
+    #   ),
+    #   inc: [sum_tasks: 0 - time]
+    # )
+    # |> Multi.delete("delete task", task)
+    # |> Repo.transaction()
   end
 
   @doc """

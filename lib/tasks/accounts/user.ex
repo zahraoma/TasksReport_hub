@@ -6,7 +6,7 @@ defmodule Tasks.Accounts.User do
     field(:name, :string)
     field(:age, :integer)
     field(:email, :string)
-    field(:sum_tasks, :integer, default: 0)
+    # field(:sum_tasks, :integer, default: 0)
     has_many(:tasks, Tasks.Tasks.Task)
 
 
