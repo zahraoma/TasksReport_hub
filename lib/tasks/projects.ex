@@ -58,11 +58,10 @@ defmodule Tasks.Projects do
 
   def sum_project(project_id, sdate, edate) do
     Repo.one(
-        from t in Task,
+      from t in Task,
         where: t.project_id == ^project_id and t.date >= ^sdate and t.date <= ^edate,
         select: sum(t.time)
     )
-
   end
 
   @doc """

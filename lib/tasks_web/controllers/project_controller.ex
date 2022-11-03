@@ -45,10 +45,6 @@ defmodule TasksWeb.ProjectController do
   end
 
   def show_sum_project(conn, _params) do
-    IO.inspect("---------------------------------")
-    IO.inspect(_params)
-    IO.inspect("---------------------------------")
-
     conn
     |> send_resp(:unprocessable_entity, "unprocessable entity")
 

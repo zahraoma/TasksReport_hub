@@ -4,7 +4,7 @@ defmodule Tasks.Tasks do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.Multi
+  # alias Ecto.Multi
   alias Tasks.Repo
   alias Tasks.Accounts.User
 
@@ -76,13 +76,15 @@ defmodule Tasks.Tasks do
     #   error ->
     #     error
 
-    # sum_tasks = Repo.one(
-    #               from u in User,
-    #               where: u.id == ^user_id,
-    #               select: sum(u.time)
-    #             )
-
     # end
+  end
+
+  def sum_tasks(user_id) do
+    Repo.one(
+      from t in Task,
+        where: t.user_id == ^user_id,
+        select: sum(t.time)
+    )
   end
 
   @doc """
@@ -151,8 +153,6 @@ defmodule Tasks.Tasks do
 
   """
   def delete_task(%Task{user_id: user_id, time: time} = task, _attrs \\ %{}) do
-
-
     Repo.delete(task)
     # IO.inspect(user_id)
 

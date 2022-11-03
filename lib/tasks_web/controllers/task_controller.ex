@@ -20,6 +20,16 @@ defmodule TasksWeb.TaskController do
     end
   end
 
+  def show_sum_tasks(conn, %{"user_id" => user_id}) do
+    sum = Tasks.sum_tasks(user_id)
+    json(conn, %{sum: sum})
+  end
+
+  def show_sum_tasks(conn, _params) do
+    conn
+    |> send_resp(:unprocessable_entity, "unprocessable entity")
+  end
+
   def show(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
     render(conn, "show.json", task: task)
