@@ -20,7 +20,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 
-In this project , every user can create a project and enter the tasks related to that project with date and time.   
+In this project , every user can create a project and enter the tasks that related to the project with date and time.   
 show_sum_project() method is used to show the total hours spend for each project and show_sum_tasks() method is used to show the total hours of tasks that each user completed in the specified interval.
 
 
