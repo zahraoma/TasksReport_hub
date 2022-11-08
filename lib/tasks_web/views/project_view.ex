@@ -11,8 +11,10 @@ defmodule TasksWeb.ProjectView do
   end
 
   def render("project.json", %{project: project}) do
+
     %{
-      id: project.id,
+      user_id: project.user_id,
+      project_id: project.id,
       title: project.title
     }
   end

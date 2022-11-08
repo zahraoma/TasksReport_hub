@@ -7,7 +7,10 @@ defmodule TasksWeb.ProjectController do
   action_fallback TasksWeb.FallbackController
 
   def index(conn, _params) do
+
     projects = Projects.list_projects()
+    |> IO.inspect()
+
     render(conn, "index.json", projects: projects)
   end
 
@@ -47,7 +50,6 @@ defmodule TasksWeb.ProjectController do
   def show_sum_project(conn, _params) do
     conn
     |> send_resp(:unprocessable_entity, "unprocessable entity")
-
     # |> send_resp("422" ,  "unprocessable entity")
   end
 

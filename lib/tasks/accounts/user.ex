@@ -6,9 +6,8 @@ defmodule Tasks.Accounts.User do
     field(:name, :string)
     field(:age, :integer)
     field(:email, :string)
-    # field(:sum_tasks, :integer, default: 0)
-    has_many(:tasks, Tasks.Tasks.Task)
-
+    has_many(:projects, Tasks.Projects.Project)
+    # has_many(:tasks, Tasks.Tasks.Task)
 
     timestamps()
   end

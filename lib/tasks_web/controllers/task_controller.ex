@@ -20,9 +20,12 @@ defmodule TasksWeb.TaskController do
     end
   end
 
-  def show_sum_tasks(conn, %{"user_id" => user_id}) do
-    sum = Tasks.sum_tasks(user_id)
-    json(conn, %{sum: sum})
+  def show_sum_tasks(conn, %{"user_id" => user_id, "sdate" => sdate, "edate" => edate}) do
+    with {:ok, sdate} <- Date.from_iso8601(sdate),
+         {:ok, edate} <- Date.from_iso8601(edate) do
+      sum = Tasks.sum_tasks(user_id, sdate, edate)
+      json(conn, %{sum: sum})
+    end
   end
 
   def show_sum_tasks(conn, _params) do

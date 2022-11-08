@@ -5,6 +5,7 @@ defmodule Tasks.Projects.Project do
   schema "projects" do
     field(:title, :string)
     field(:sum_project, :integer, virtual: true)
+    belongs_to(:user, Tasks.Accounts.User)
     has_many(:tasks, Tasks.Tasks.Task)
 
     timestamps()
@@ -21,7 +22,7 @@ defmodule Tasks.Projects.Project do
   @doc false
   def changeset(project, attrs) do
     project
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:user_id, :title])
+    |> validate_required([:user_id, :title])
   end
 end

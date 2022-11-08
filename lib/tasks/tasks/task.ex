@@ -13,6 +13,14 @@ defmodule Tasks.Tasks.Task do
     timestamps()
   end
 
+  @spec changeset(
+          {map, map}
+          | %{
+              :__struct__ => atom | %{:__changeset__ => map, optional(any) => any},
+              optional(atom) => any
+            },
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
+        ) :: Ecto.Changeset.t()
   @doc false
   def changeset(task, attrs) do
     task
@@ -20,8 +28,4 @@ defmodule Tasks.Tasks.Task do
     |> validate_required([:title, :content, :time, :user_id])
   end
 
-  def update_changeset(task, attrs) do
-    task
-    |> cast(attrs, [:title, :content, :date, :time, :user_id], :project_id)
-  end
 end
